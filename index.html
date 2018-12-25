@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,7 @@
     <title>DarkDram</title>
 
     <link href="https://fonts.googleapis.com/css?family=Hind|Aleo" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 
     <style>
         /* reset.css begin */
@@ -70,14 +71,22 @@
         body {
             height: 100%;
             width: 100%;
+            min-width: 350px;
             font-size: 16px;
         }
 
-        .background {
+        .background,
+        #app {
             position: relative;
             height: 100vh;
             width: 100vw;
-            background: #000 url('header.jpg') no-repeat 100% 100%/cover;
+
+            height: 100%;
+            width: 100%;
+        }
+
+        .background {
+            background: #000 url('header.jpg')  no-repeat  100% 100%/cover;
         }
 
         .header {
@@ -85,7 +94,7 @@
             top: 50%;
             left: 50%;
             padding: 25px;
-            background: rgba(0,0,0,.6);
+            background: rgba(0,0,0,.45);
             transform: translate(-50%, -50%);
             color: #fff;
             font-family: 'Aleo', serif;
@@ -94,13 +103,49 @@
             font-style: italic;
         }
 
+        .dots {
+            display: inline-block;
+            width: .65em;
+        }
     </style>
 </head>
 <body>
-    <div class="background">
+    <div id="app">
+        <div class="background">
         <div class="header">
             Coming soon
+            <span class="dots">{{ dots }}</span>
         </div>
     </div>
+</div>
 </body>
+
+<script>
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            timer: null,
+            counter: 0
+        },
+        computed: {
+            dots: function() {
+                var vm = this,
+                    _dots = '...',
+                    _count = vm.counter % 4
+
+                return _dots.slice(0, _count)
+            }
+        },
+        mounted: function() {
+            var vm = this
+
+            vm.timer = setInterval(function(){
+                vm.counter++;
+            }, 500)
+        }
+    })
+
+</script>
+
 </html>
